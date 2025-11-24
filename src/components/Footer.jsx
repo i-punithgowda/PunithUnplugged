@@ -2,13 +2,11 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 dark:bg-dark-bg text-white py-8 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <p className="text-gray-400 dark:text-gray-500">
-            © 2025 Punith Gowda S P. All rights reserved.
-          </p>
-        </div>
+    <footer className="bg-ink text-white py-10 mt-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-4 text-center">
+        <p className="text-sm tracking-[0.4em] uppercase text-white/60">Punith Gowda</p>
+        <p className="text-white/70">Crafting calm, impactful digital experiences.</p>
+        <p className="text-xs text-white/50">© {new Date().getFullYear()} All rights reserved.</p>
       </div>
     </footer>
   )

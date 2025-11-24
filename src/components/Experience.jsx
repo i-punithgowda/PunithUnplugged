@@ -48,91 +48,61 @@ const Experience = () => {
   ]
 
   return (
-    <section id="experience" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-dark-bg dark:to-dark-bg min-h-screen flex items-start pt-20 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
+    <section id="experience" className="py-24 bg-surface-light dark:bg-surface-dark transition-colors">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-sans">Experience</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
-            Here's a timeline of my professional journey and the impactful projects I've worked on.
+          <p className="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mb-3">Experience</p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-ink dark:text-white">
+            A systems-first view on shipping software
+          </h2>
+          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            Full-stack partnerships with product owners to stabilise platforms, unblock teams, and launch confidently.
           </p>
         </div>
 
-        {/* Timeline Container */}
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-8 md:left-1/2 transform md:-translate-x-0.5 top-0 bottom-0 w-0.5 bg-[#00FF99]"></div>
-
-          {/* Experience Cards */}
-          <div className="space-y-12">
-            {experiences.map((experience, index) => (
-              <div key={experience.id} className={`relative flex items-center ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                {/* Timeline Dot */}
-                <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 rounded-full bg-[#00FF99] border-4 border-white dark:border-dark-bg shadow-lg z-10">
-                  <div className="absolute inset-0 rounded-full bg-[#00FF99] opacity-20"></div>
-                </div>
-
-                {/* Experience Card */}
-                <div className={`ml-16 md:ml-0 md:w-5/12 ${index % 2 === 0 ? 'md:mr-auto md:pr-16' : 'md:ml-auto md:pl-16'}`}>
-                  <div className="bg-white dark:bg-dark-bg rounded-lg shadow-lg p-8 hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700">
-                    {/* Header */}
-                    <div className="flex items-start space-x-4 mb-6">
-                      <div className="text-3xl p-3 rounded-lg bg-gray-100 dark:bg-gray-800">
-                        {experience.icon}
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 leading-tight font-sans">
-                          {experience.title}
-                        </h3>
-                        <p className="text-lg font-semibold text-[#00FF99] mb-1 font-sans">
-                          {experience.company}
-                        </p>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 font-medium font-sans">
-                          {experience.duration}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Technologies */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 uppercase tracking-wide font-sans">
-                        Tech Stack
-                      </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {experience.technologies.map((tech) => (
-                          <span 
-                            key={tech}
-                            className="border-2 border-[#00FF99] text-[#00FF99] px-3 py-1 rounded-full text-sm font-medium font-sans hover:bg-[#00FF99] hover:text-white transition-all duration-300 cursor-default"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    {/* Achievements */}
-                    <div>
-                      <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wide font-sans">
-                        Key Achievements
-                      </h4>
-                      <ul className="space-y-2">
-                        {experience.achievements.map((achievement, achievementIndex) => (
-                          <li key={achievementIndex} className="flex items-start font-sans">
-                            <span className="text-[#00FF99] mr-3 mt-1">•</span>
-                            <span className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                              {achievement}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+        <div className="grid gap-10 lg:gap-12">
+          {experiences.map((experience) => (
+            <article key={experience.id} className="card-shell p-8 lg:p-10">
+              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+                <div>
+                  <div className="inline-flex items-center gap-3 rounded-full border border-brand/20 bg-white/90 px-4 py-2 text-sm font-medium text-brand shadow-sm dark:bg-white/10 dark:text-white">
+                    <span>{experience.icon}</span>
+                    <span>{experience.duration}</span>
                   </div>
+                  <h3 className="mt-5 text-2xl font-semibold text-ink dark:text-white">{experience.title}</h3>
+                  <p className="text-lg font-medium text-slate-500 dark:text-slate-300">{experience.company}</p>
+                </div>
+                <div className="text-sm text-slate-500 dark:text-slate-300 max-w-sm">
+                  I partnered end-to-end with product, engineering, and ops teams to close feedback loops and release stable capabilities without the typical fire drills.
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
 
+              <div className="mt-8 border-t border-white/40 dark:border-white/10 pt-8 grid gap-6 md:grid-cols-[1fr_1.3fr]">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.4em] text-slate-500 dark:text-slate-400 mb-3">Stack</p>
+                  <div className="flex flex-wrap gap-2">
+                    {experience.technologies.map((tech) => (
+                      <span key={tech} className="pill-chip">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.4em] text-slate-500 dark:text-slate-400 mb-3">Highlights</p>
+                  <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-200">
+                    {experience.achievements.map((achievement, achievementIndex) => (
+                      <li key={achievementIndex} className="flex gap-3">
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-brand" />
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   )

@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import emailjs from '@emailjs/browser'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -6,39 +7,73 @@ const Contact = () => {
     email: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState(null) // 'success' or 'error'
+
+  // Initialize EmailJS
+  React.useEffect(() => {
+    emailjs.init('0OyYMAQF3lppjXnUf')
+  }, [])
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+    // Clear status when user starts typing
+    if (submitStatus) {
+      setSubmitStatus(null)
+    }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-    // Reset form
-    setFormData({ name: '', email: '', message: '' })
-    alert('Thank you for your message! I\'ll get back to you soon.')
+    setIsSubmitting(true)
+    setSubmitStatus(null)
+
+    try {
+      const result = await emailjs.send(
+        'service_gwifucw',
+        'template_ql7nkin',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        }
+      )
+
+      if (result.text === 'OK') {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', message: '' })
+        // Clear success message after 5 seconds
+        setTimeout(() => setSubmitStatus(null), 5000)
+      }
+    } catch (error) {
+      console.error('EmailJS error:', error)
+      setSubmitStatus('error')
+      // Clear error message after 5 seconds
+      setTimeout(() => setSubmitStatus(null), 5000)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <section id="contact" className="py-20 bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-dark-bg dark:to-dark-bg min-h-screen flex items-start pt-20 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-24 bg-surface-light dark:bg-surface-dark transition-colors">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 font-sans">Get In Touch</h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto font-sans">
-            Have a project in mind or want to collaborate? I'd love to hear from you!
+          <p className="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mb-3">Contact</p>
+          <h2 className="text-3xl md:text-4xl font-semibold text-ink dark:text-white">Let’s build something thoughtful</h2>
+          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
+            Share where you are stuck—strategy, performance, DX—and I’ll help map a calm path forward.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div>
+        <div className="grid md:grid-cols-2 gap-10">
+          <div className="card-shell p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-sans">
+                <label htmlFor="name" className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
                   Name
                 </label>
                 <input
@@ -48,13 +83,12 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-[#00FF99] focus:border-transparent font-sans"
-                  placeholder="Your name"
+                  className="w-full rounded-2xl border border-white/60 bg-white/80 px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:bg-white/5 dark:text-white"
+                  placeholder="Ada Lovelace"
                 />
               </div>
-
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-sans">
+                <label htmlFor="email" className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
                   Email
                 </label>
                 <input
@@ -64,14 +98,13 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-[#00FF99] focus:border-transparent font-sans"
-                  placeholder="your.email@example.com"
+                  className="w-full rounded-2xl border border-white/60 bg-white/80 px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:bg-white/5 dark:text-white"
+                  placeholder="you@email.com"
                 />
               </div>
-
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 font-sans">
-                  Message
+                <label htmlFor="message" className="block text-sm font-medium text-slate-600 dark:text-slate-300 mb-2">
+                  Project context
                 </label>
                 <textarea
                   id="message"
@@ -79,67 +112,88 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-dark-bg text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-[#00FF99] focus:border-transparent font-sans"
-                  placeholder="Tell me about your project..."
+                  rows={5}
+                  className="w-full rounded-2xl border border-white/60 bg-white/80 px-4 py-3 text-sm text-ink placeholder:text-slate-400 focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20 dark:bg-white/5 dark:text-white"
+                  placeholder="What are we solving together?"
                 />
               </div>
-
-              <button
-                type="submit"
-                className="w-full border-2 border-[#00FF99] text-[#00FF99] py-3 px-6 rounded-lg font-semibold hover:bg-[#00FF99] hover:text-white transition-all duration-300 font-sans"
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full rounded-2xl bg-brand text-white py-3 text-sm font-semibold tracking-wide shadow-card transition hover:bg-brand-deep disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send the note'}
               </button>
+              {submitStatus === 'success' && (
+                <p className="text-sm text-green-600 dark:text-green-400 mt-2">
+                  ✓ Message sent! I'll get back to you soon.
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-sm text-red-600 dark:text-red-400 mt-2">
+                  ✗ Something went wrong. Please try again or email me directly.
+                </p>
+              )}
             </form>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 font-sans">Let's Connect</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-8 font-sans">
-                I'm always interested in new opportunities and exciting projects. 
-                Whether you have a question or just want to say hi, feel free to reach out!
+            <div className="card-shell p-8">
+              <h3 className="text-xl font-semibold text-ink dark:text-white">Collaboration fit</h3>
+              <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
+                Available for fractional product engineering, platform hardening, and design-led prototyping sprints.
               </p>
             </div>
 
-            <div className="space-y-6">
-              <a href="mailto:punithgsp.partha@gmail.com" className="flex items-center space-x-4 p-4 bg-white dark:bg-dark-bg rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:border-[#00FF99] hover:scale-105 transition-all duration-300 cursor-pointer">
-                <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full group-hover:bg-[#00FF99]/10 transition-colors duration-300">
-                  <svg className="w-6 h-6 text-[#00FF99] group-hover:text-[#00FF99] transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white font-sans group-hover:text-[#00FF99] transition-colors duration-300">Email</p>
-                  <p className="text-gray-600 dark:text-gray-300 font-sans">punithgsp.partha@gmail.com</p>
-                </div>
-              </a>
-
-              <a href="https://github.com/i-punithgowda" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 bg-white dark:bg-dark-bg rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:border-[#00FF99] hover:scale-105 transition-all duration-300 cursor-pointer group">
-                <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full group-hover:bg-[#00FF99]/10 transition-colors duration-300">
-                  <svg className="w-6 h-6 text-[#00FF99] group-hover:text-[#00FF99] transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white font-sans group-hover:text-[#00FF99] transition-colors duration-300">GitHub</p>
-                  <p className="text-gray-600 dark:text-gray-300 font-sans">github.com/i-punithgowda</p>
-                </div>
-              </a>
-
-              <a href="https://www.linkedin.com/in/punith-gowda-s-p-7452391b8" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 p-4 bg-white dark:bg-dark-bg rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl hover:border-[#00FF99] hover:scale-105 transition-all duration-300 cursor-pointer group">
-                <div className="bg-gray-100 dark:bg-gray-800 p-3 rounded-full group-hover:bg-[#00FF99]/10 transition-colors duration-300">
-                  <svg className="w-6 h-6 text-[#00FF99] group-hover:text-[#00FF99] transition-colors duration-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                  </svg>
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 dark:text-white font-sans group-hover:text-[#00FF99] transition-colors duration-300">LinkedIn</p>
-                  <p className="text-gray-600 dark:text-gray-300 font-sans">linkedin.com/in/punith-gowda-s-p-7452391b8</p>
-                </div>
-              </a>
+            <div className="space-y-4">
+              {[
+                {
+                  label: 'Email',
+                  value: 'punithgsp.partha@gmail.com',
+                  href: 'mailto:punithgsp.partha@gmail.com',
+                  icon: (
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8m-2 11H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v10a2 2 0 01-2 2z" />
+                    </svg>
+                  )
+                },
+                {
+                  label: 'GitHub',
+                  value: 'github.com/i-punithgowda',
+                  href: 'https://github.com/i-punithgowda',
+                  icon: (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 0C5.37 0 0 5.48 0 12.25c0 5.42 3.44 10.01 8.21 11.63.6.11.82-.27.82-.59v-2.26c-3.34.75-4.04-1.42-4.04-1.42-.55-1.4-1.33-1.78-1.33-1.78-1.09-.75.08-.73.08-.73 1.21.08 1.84 1.26 1.84 1.26 1.07 1.85 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.47-1.35-5.47-5.96 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.53.11-3.19 0 0 1.01-.33 3.3 1.24.96-.26 1.98-.4 3-.4 1.02 0 2.04.14 3 .4 2.29-1.57 3.3-1.24 3.3-1.24.65 1.66.24 2.89.12 3.19.77.84 1.23 1.91 1.23 3.22 0 4.63-2.81 5.64-5.48 5.95.43.38.83 1.13.83 2.28v3.28c0 .33.21.71.83.59C20.56 22.25 24 17.67 24 12.25 24 5.48 18.63 0 12 0z" />
+                    </svg>
+                  )
+                },
+                {
+                  label: 'LinkedIn',
+                  value: 'linkedin.com/in/punith-gowda-s-p-7452391b8',
+                  href: 'https://www.linkedin.com/in/punith-gowda-s-p-7452391b8',
+                  icon: (
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.026-3.037-1.85-3.037-1.855 0-2.138 1.45-2.138 2.949v5.657H9.351V9h3.414v1.561h.048c.476-.9 1.637-1.85 3.37-1.85 3.6 0 4.264 2.37 4.264 5.455v6.286zM5.337 7.433c-1.144 0-2.068-.927-2.068-2.068C3.269 4.223 4.193 3.3 5.337 3.3c1.142 0 2.064.923 2.064 2.065 0 1.14-.922 2.068-2.064 2.068zm-1.78 13.019h3.56V9h-3.56v11.452z" />
+                    </svg>
+                  )
+                }
+              ].map((contactInfo) => (
+                <a
+                  key={contactInfo.label}
+                  href={contactInfo.href}
+                  target={contactInfo.href.startsWith('http') ? '_blank' : undefined}
+                  rel={contactInfo.href.startsWith('http') ? 'noreferrer' : undefined}
+                  className="flex items-center gap-4 rounded-2xl border border-white/60 bg-white/90 p-4 transition hover:border-brand hover:text-brand dark:bg-surface-card-dark/80 dark:text-white"
+                >
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/60 bg-white/80 text-brand dark:bg-white/10">
+                    {contactInfo.icon}
+                  </span>
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">{contactInfo.label}</p>
+                    <p className="text-base font-medium text-ink dark:text-white">{contactInfo.value}</p>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </div>

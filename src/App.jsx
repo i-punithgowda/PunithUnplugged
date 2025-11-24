@@ -12,7 +12,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50 dark:bg-dark-bg flex flex-col transition-colors">
+        <div className="min-h-screen bg-surface-light dark:bg-surface-dark flex flex-col transition-colors duration-500">
           <Header />
           <main className="flex-grow">
             <Routes>

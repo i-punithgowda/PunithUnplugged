@@ -12,3 +12,31 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+@layer base {
+  body {
+    @apply bg-surface-light dark:bg-surface-dark text-ink dark:text-white;
+  }
+
+  ::selection {
+    @apply bg-brand text-white;
+  }
+
+  section {
+    @apply scroll-mt-24;
+  }
+}
+
+@layer components {
+  .card-shell {
+    @apply rounded-2xl border border-white shadow-lifted bg-surface-card/80 backdrop-blur-md dark:bg-surface-card-dark/80 dark:border-white/5;
+  }
+
+  .pill-chip {
+    @apply rounded-full border border-brand/20 bg-brand-muted/50 text-ink text-sm font-medium px-4 py-1 dark:bg-white/5 dark:text-white/80;
+  }
+
+  .ghost-button {
+    @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 border-2 border-brand text-brand font-semibold transition-colors duration-300 hover:bg-brand hover:text-white;
+  }
+}
