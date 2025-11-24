@@ -84,7 +84,7 @@ const Hero = () => {
           <div className="grid grid-cols-1 md:flex md:justify-between md:items-center gap-6 md:gap-0">
             <div className="text-center">
               <div className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white flex items-center justify-center gap-2">
-                21 <span className="text-base md:text-xl font-normal">Age</span>
+                25 <span className="text-base md:text-xl font-normal">Age</span>
               </div>
             </div>
             <div className="text-center">
