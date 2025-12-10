@@ -40,3 +40,18 @@ body {
     @apply inline-flex items-center justify-center rounded-full px-5 py-2.5 border-2 border-brand text-brand font-semibold transition-colors duration-300 hover:bg-brand hover:text-white;
   }
 }
+
+@layer utilities {
+  @keyframes gradient {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient 6s ease infinite;
+  }
+}

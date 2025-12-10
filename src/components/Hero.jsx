@@ -59,9 +59,24 @@ const Hero = () => {
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
-          <div className="rounded-3xl border border-white/60 bg-white/80 p-8 shadow-lifted backdrop-blur-xl dark:bg-surface-card-dark/80 dark:border-white/5">
-            <p className="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-300 mb-6">Software Engineer</p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight text-ink dark:text-white min-h-[1.2em]">
+          <div className="rounded-3xl border border-white/60 bg-white/80 p-10 shadow-lifted backdrop-blur-xl dark:bg-surface-card-dark/80 dark:border-white/5">
+            <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand/10 to-accent/10 px-4 py-2 mb-6 border border-brand/20">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+              </span>
+              <span className="text-sm font-semibold bg-gradient-to-r from-brand to-accent bg-clip-text text-transparent">
+                Available for opportunities
+              </span>
+            </div>
+            
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-4 leading-tight">
+              <span className="bg-gradient-to-r from-brand via-accent to-brand bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                Punith Gowda S P
+              </span>
+            </h1>
+            
+            <div className="text-xl sm:text-2xl lg:text-3xl font-medium leading-tight text-slate-700 dark:text-slate-200 mb-6 min-h-[1.2em]">
               <Typist 
                 text="Building calm, resilient products that feel hand-crafted." 
                 speed={30}
@@ -69,19 +84,26 @@ const Hero = () => {
                 showCursor={true}
                 className="inline-block"
               />
-            </h1>
-            <p className="mt-6 text-lg text-slate-600 dark:text-slate-200 max-w-2xl">
-              I translate complex business goals into thoughtful front-end and platform architecture—mixing deep JavaScript expertise with systems thinking.
+            </div>
+            
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl leading-relaxed">
+              I translate complex business goals into complete <span className="font-semibold text-brand">full-stack solutions</span>—architecting databases, backend systems, and front-end experiences with deep technical expertise and systems thinking.
             </p>
 
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <button onClick={handleDownloadCV} className="ghost-button gap-2">
+              <button 
+                onClick={handleDownloadCV} 
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand/25 transition-all hover:shadow-xl hover:shadow-brand/40 hover:scale-105 active:scale-95"
+              >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 Download résumé
               </button>
-              <a href="#contact" className="inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-slate-600 transition hover:text-brand dark:text-slate-200">
+              <a 
+                href="#contact" 
+                className="inline-flex items-center justify-center rounded-full border-2 border-slate-300 dark:border-slate-600 px-6 py-3 text-sm font-semibold text-slate-700 dark:text-slate-200 transition-all hover:border-brand hover:text-brand hover:scale-105 active:scale-95"
+              >
                 Book a call →
               </a>
             </div>
@@ -93,7 +115,7 @@ const Hero = () => {
                   href={social.href}
                   target={social.href.startsWith('http') ? '_blank' : undefined}
                   rel={social.href.startsWith('http') ? 'noreferrer' : undefined}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-white/60 bg-white/70 text-ink transition hover:border-brand hover:text-brand dark:bg-surface-card-dark/70 dark:text-white"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-slate-300 dark:border-slate-600 bg-white/70 dark:bg-surface-card-dark/70 text-slate-600 dark:text-slate-300 transition-all hover:border-brand hover:text-brand hover:scale-110 hover:shadow-lg active:scale-95"
                   aria-label={social.label}
                 >
                   {social.icon}
