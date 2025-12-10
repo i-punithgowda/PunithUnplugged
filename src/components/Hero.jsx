@@ -130,9 +130,7 @@ const Hero = () => {
               <div className="overflow-hidden rounded-[28px] border border-white/40 dark:border-white/5">
                 <img src={profilePicture} alt="Punith Gowda S P" className="w-full object-cover" />
               </div>
-              <div className="mt-6 rounded-2xl bg-brand-muted/70 p-5 text-sm text-slate-600 dark:text-slate-200 dark:bg-white/5">
-                Currently collaborating with startups to scale bespoke learning platforms, ritual commerce, and AI-assisted developer tools.
-              </div>
+              
             </div>
           </div>
         </div>
