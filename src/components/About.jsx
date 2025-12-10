@@ -23,7 +23,7 @@ const About = () => {
   const projectsData = [
     {
       id: 1,
-      title: "LLM-Powered Git Diff Summarizer",
+      title: "summarAIze",
       description: "Built a local-first developer tool to compare Git branches and summarize per-file code changes using the Phi-3 Mini LLM",
       tech: ["FastAPI", "React", "Git", "Python", "Ollama", "Phi-3 Mini", "Docker"],
       duration: "July 2025 – Present",
@@ -94,7 +94,15 @@ const About = () => {
             {projectsData.map((project) => (
               <div key={project.id} className="rounded-2xl border border-white/40 bg-white/70 p-6 dark:bg-white/5">
                 <div className="flex items-center justify-between gap-4">
-                  <h4 className="text-lg font-semibold text-ink dark:text-white">{project.title}</h4>
+                  <h4 className="text-lg font-semibold text-ink dark:text-white">
+                    {project.title === "summarAIze" ? (
+                      <>
+                        summar<span className="font-bold bg-gradient-to-r from-brand to-purple-500 bg-clip-text text-transparent">AI</span>ze
+                      </>
+                    ) : (
+                      project.title
+                    )}
+                  </h4>
                   <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">{project.duration}</span>
                 </div>
                 <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{project.description}</p>
