@@ -53,35 +53,23 @@ export default function Recognition() {
           return (
             <li key={award.id} className={isPhoto ? 'relative' : ''}>
               {isPhoto ? (
-                <button
-                  type="button"
-                  onClick={() => setOpen(i)}
-                  className="group relative block w-full overflow-hidden rounded-[28px] text-left"
-                  aria-label={`${award.title} — ${award.when}. Open full photo.`}
-                >
-                  <img
-                    src={src}
-                    alt="Punith Gowda on stage at Techcanopy IGNITE Annual Awards 2024, wearing the Rising Star medal"
-                    className="aspect-[16/10] w-full object-cover object-[center_18%] md:aspect-[21/9] md:min-h-[420px]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-night via-night/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-6 sm:flex-row sm:items-end sm:justify-between sm:p-8">
-                    <div className="text-cream">
-                      <p className="t-micro flex items-center gap-2 text-sun">
-                        <span className="h-2 w-2 rounded-full bg-sun" />
-                        {String(i + 1).padStart(2, '0')} · {award.when}
-                      </p>
-                      <h3 className="mt-2 text-[clamp(2rem,5vw,3.6rem)] font-medium leading-[0.95] tracking-[-0.05em]">
-                        {award.title}
-                      </h3>
-                      <p className="t-sm mt-3 max-w-[40ch] text-cream/80">{award.copy}</p>
-                    </div>
-                    <span className="pill bg-sun text-ink w-fit">
-                      {award.mark}
-                      <span className="h-2 w-2 rounded-full bg-ink" aria-hidden="true" />
-                    </span>
-                  </div>
-                </button>
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(i)}
+                    className="group relative block w-full overflow-hidden rounded-[28px] text-left"
+                    aria-label={`${award.title} — ${award.when}. Open full photo.`}
+                  >
+                    <img
+                      src={src}
+                      alt="Punith Gowda on stage at Techcanopy IGNITE, wearing the Rising Star medal"
+                      className="aspect-[16/10] w-full object-cover object-[center_18%] md:aspect-[21/9] md:min-h-[420px]"
+                    />
+                  </button>
+                  <p className="mt-4 text-[1.7rem] font-medium tracking-tight">
+                    {award.title} — {award.when}
+                  </p>
+                </div>
               ) : (
                 <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
                   <div>

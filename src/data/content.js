@@ -330,10 +330,10 @@ export const awards = [
     title: 'Rising Star',
     kind: 'photo',
     org: 'Techcanopy · IGNITE',
-    when: 'Annual Awards 2024',
-    mark: 'Annual',
+    when: '2024',
+    mark: null,
     accent: '#f5e211',
-    copy: 'On stage with the medal. Voted Rising Star at the annual awards.',
+    copy: '',
   },
   {
     id: 'consistent-contributor',
