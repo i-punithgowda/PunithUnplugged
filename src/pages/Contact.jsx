@@ -1,12 +1,5 @@
-import React from 'react'
-import Contact from '../components/Contact'
+import Home from './Home'
 
-const ContactPage = () => {
-  return (
-    <div className="pt-20">
-      <Contact />
-    </div>
-  )
-}
+const ContactPage = () => <Home />
 
 export default ContactPage

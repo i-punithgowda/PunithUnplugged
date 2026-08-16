@@ -1,111 +1,123 @@
-import React from 'react'
+import { useLayoutEffect, useRef } from 'react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { experience } from '../data/content'
 
-const Experience = () => {
-  const experiences = [
-    {
-      id: 1,
-      title: "EdTech Platform – Performance Optimization",
-      company: "Performance Optimization Specialist",
-      duration: "Dec 2023 – May 2024",
-      technologies: ["JavaScript", "PHP", "MySQL"],
-      achievements: [
-        "Profiled a large-scale ed-tech application with complex SQL queries and JavaScript logic to identify bottlenecks causing slow responses",
-        "Rewrote critical admin-side code and optimized queries, reducing response times from 3 minutes to under 1 second",
-        "Implemented stored procedures for high-volume client-side queries, improving initial query execution from 40s to 1s",
-        "Enhanced overall system performance, enabling smooth data fetching and filtering for thousands of students"
-      ],
-      icon: "⚡"
-    },
-    {
-      id: 2,
-      title: "University Mentoring Platform",
-      company: "Full-Stack Developer",
-      duration: "June 2024 – Jan 2025",
-      technologies: ["React", "Node.js", "MySQL", "Sequelize", "WebSockets"],
-      achievements: [
-        "Built a multi-university system to track student records, conduct online examinations, and store scores, logbooks, EPA and assessments",
-        "Developed a mentoring module with appointment timeslots, live chat via WebSockets, and detailed student performance visualization (GPA, GPAX, semester marks)",
-        "Designed a singleton-based backend DB connection to support multiple university databases through a master DB",
-        "Implemented admin-side mentoring configuration including phases, academic years, and mentor-to-student assignments",
-        "Built an admin dashboard to display student progress across multiple aspects such as Logbook, EPA Progress, Longitudinal Pool, and Excellence metrics"
-      ],
-      icon: "🎓"
-    },
-    {
-      id: 3,
-      title: "FaithTech Wellness Platform",
-      company: "Backend Developer",
-      duration: "Feb 2025 – Present",
-      technologies: ["Node.js", "Express", "PostgreSQL", "Redis", "AWS S3", "Google Cloud"],
-      achievements: [
-        "Developed backend for a multi-role wellness platform supporting users, pandits, and content creators",
-        "Built voice and text Q&A functionality for users and pandits, storing all media securely in Google Cloud",
-        "Implemented ritual recommendations and habit tracking, alongside horoscope display for users",
-        "Built secure content upload and delivery for creators using Google Cloud CDN and signed URLs"
-      ],
-      icon: "🧘"
-    }
-  ]
+gsap.registerPlugin(ScrollTrigger)
+
+export default function Experience() {
+  const rootRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const root = rootRef.current
+    if (!root) return
+
+    const ctx = gsap.context(() => {
+      const mm = gsap.matchMedia()
+
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        const line = root.querySelector('[data-line]')
+        const roles = gsap.utils.toArray('[data-role]', root)
+
+        if (line) {
+          gsap.fromTo(
+            line,
+            { scaleY: 0 },
+            {
+              scaleY: 1,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: root,
+                start: 'top 72%',
+                end: 'bottom 55%',
+                scrub: 0.4,
+              },
+            },
+          )
+        }
+
+        roles.forEach((el) => {
+          gsap.from(el, {
+            opacity: 0,
+            y: 36,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 86%',
+            },
+          })
+        })
+      })
+    }, root)
+
+    return () => ctx.revert()
+  }, [])
 
   return (
-    <section id="experience" className="py-24 bg-surface-light dark:bg-surface-dark transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mb-3">Experience</p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-ink dark:text-white">
-            A systems-first view on shipping software
-          </h2>
-          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            Full-stack partnerships with product owners to stabilise platforms, unblock teams, and launch confidently.
-          </p>
-        </div>
+    <section
+      id="experience"
+      ref={rootRef}
+      aria-label="Experience"
+      className="band relative scroll-mt-16 overflow-hidden bg-night text-cream"
+    >
+      <div className="wrap">
+        <p className="t-micro flex items-center gap-2.5 text-fog">
+          <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
+          Experience
+        </p>
+        <h2 className="t-heading mt-5 max-w-[18ch]">At Techcanopy.</h2>
+        <p className="t-sm mt-5 text-fog">Aug 2023 → now.</p>
 
-        <div className="grid gap-10 lg:gap-12">
-          {experiences.map((experience) => (
-            <article key={experience.id} className="card-shell p-8 lg:p-10">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                <div>
-                  <div className="inline-flex items-center gap-3 rounded-full border border-brand/20 bg-white/90 px-4 py-2 text-sm font-medium text-brand shadow-sm dark:bg-white/10 dark:text-white">
-                    <span>{experience.icon}</span>
-                    <span>{experience.duration}</span>
-                  </div>
-                  <h3 className="mt-5 text-2xl font-semibold text-ink dark:text-white">{experience.title}</h3>
-                  <p className="text-lg font-medium text-slate-500 dark:text-slate-300">{experience.company}</p>
-                </div>
-                <div className="text-sm text-slate-500 dark:text-slate-300 max-w-sm">
-                  I partnered end-to-end with product, engineering, and ops teams to close feedback loops and release stable capabilities without the typical fire drills.
-                </div>
-              </div>
+        <ol className="relative mt-20" role="list">
+          <span
+            aria-hidden="true"
+            className="absolute bottom-4 left-[5px] top-4 w-px bg-cream/10 md:left-[calc(11rem+5px)]"
+          />
+          <span
+            data-line
+            aria-hidden="true"
+            className="absolute bottom-4 left-[5px] top-4 w-px origin-top scale-y-0 bg-grass md:left-[calc(11rem+5px)] motion-reduce:scale-y-100"
+          />
 
-              <div className="mt-8 border-t border-white/40 dark:border-white/10 pt-8 grid gap-6 md:grid-cols-[1fr_1.3fr]">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-slate-500 dark:text-slate-400 mb-3">Stack</p>
-                  <div className="flex flex-wrap gap-2">
-                    {experience.technologies.map((tech) => (
-                      <span key={tech} className="pill-chip">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
+          {experience.map((item) => (
+            <li
+              key={item.title}
+              data-role
+              className="relative grid grid-cols-[24px_1fr] items-start gap-5 pb-16 last:pb-0 md:grid-cols-[9rem_24px_1fr] md:gap-8"
+            >
+              <p className="hidden font-display text-[clamp(2.2rem,4vw,3.6rem)] font-medium leading-none tracking-[-0.06em] text-cream/25 md:block md:text-right">
+                {item.year}
+              </p>
+              <span
+                className={`relative z-10 mt-2 h-2.5 w-2.5 rounded-full ${
+                  item.mark ? 'bg-grass live-ring' : 'bg-cream/35'
+                }`}
+                aria-hidden="true"
+              />
+              <div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="t-micro text-fog md:hidden">{item.year}</p>
+                  {item.mark && (
+                    <span className="pill h-8 min-h-8 bg-grass px-3 text-[12px] text-ink">{item.mark}</span>
+                  )}
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-slate-500 dark:text-slate-400 mb-3">Highlights</p>
-                  <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-200">
-                    {experience.achievements.map((achievement, achievementIndex) => (
-                      <li key={achievementIndex} className="flex gap-3">
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-brand" />
-                        <span>{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <h3
+                  className={`mt-2 font-medium tracking-tight ${
+                    item.mark
+                      ? 'text-[clamp(1.7rem,3.2vw,2.6rem)] leading-[1.1]'
+                      : 'text-[clamp(1.45rem,2.6vw,2.1rem)] leading-[1.15]'
+                  }`}
+                >
+                  {item.title}
+                </h3>
+                <p className="t-sm mt-1 text-fog">{item.place}</p>
+                <p className="t-micro mt-3 text-fog/70">{item.range}</p>
               </div>
-            </article>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   )
 }
-
-export default Experience

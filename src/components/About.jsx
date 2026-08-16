@@ -1,151 +1,52 @@
-import React from 'react'
+import profilePicture from '../assets/profile_picture.jpeg'
+import { about } from '../data/content'
 
-const About = () => {
-  const educationData = [
-    {
-      id: 1,
-      degree: "Master of Computer Applications",
-      institution: "R V College of Engineering",
-      location: "Bengaluru, Karnataka",
-      cgpa: "8.58",
-      duration: "Feb. 2022 – Aug 2023"
-    },
-    {
-      id: 2,
-      degree: "Bachelor of Computer Applications",
-      institution: "Global Institute of Management Sciences",
-      location: "Bengaluru, Karnataka",
-      cgpa: "8.05",
-      duration: "Jun. 2018 – Sep 2021"
-    }
-  ]
-
-  const projectsData = [
-    {
-      id: 1,
-      title: "summarAIze",
-      description: "Built a local-first developer tool to compare Git branches and summarize per-file code changes using the Phi-3 Mini LLM",
-      tech: ["FastAPI", "React", "Git", "Python", "Ollama", "Phi-3 Mini", "Docker"],
-      duration: "July 2025 – Present",
-      details: [
-        "Created a FastAPI backend that accepts repo path, base branch, and compare branch to compute diffs with GitPython",
-        "Extracted file names and content changes for each file and generated LLM-powered summaries with improvement suggestions",
-        "Implemented rule-based code checks: the system evaluates code against customizable coding standards and explains which parts violate the rules and why"
-      ]
-    }
-  ]
-
-  const skillsData = [
-    {
-      category: "Languages",
-      skills: ["JavaScript (ES6+)", "TypeScript", "Python", "Java", "SQL", "HTML", "CSS3"]
-    },
-    {
-      category: "Frameworks & Platforms",
-      skills: ["React.js", "React Native", "Node.js", "Express.js", "FastAPI", "Flask"]
-    },
-    {
-      category: "Developer Tools",
-      skills: ["Git", "GitHub", "Docker", "Nginx", "Postman"]
-    },
-    {
-      category: "Cloud & Databases",
-      skills: ["MongoDB", "PostgreSQL", "Firebase", "AWS", "Google Cloud"]
-    },
-    {
-      category: "Libraries & UI",
-      skills: ["Tailwind CSS", "Redux", "Zustand", "WebSockets", "Telegram Bot API"]
-    }
-  ]
-
+export default function About() {
   return (
-    <section id="about" className="py-24 bg-surface-light dark:bg-surface-dark transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="text-sm uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400 mb-3">About</p>
-          <h2 className="text-3xl md:text-4xl font-semibold text-ink dark:text-white">
-            Strategy, craft, and systems thinking
-          </h2>
-          <p className="mt-4 text-base text-slate-600 dark:text-slate-300 max-w-3xl mx-auto">
-            I’ve helped early-stage founders and enterprise teams ship reliable, human UI across education, wellness and developer tooling.
+    <section id="about" aria-label="About" className="band scroll-mt-16">
+      <div className="wrap grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <div>
+          <p className="t-micro flex items-center gap-2.5">
+            <span className="h-2 w-2 rounded-full bg-grass" aria-hidden="true" />
+            {about.kicker}
           </p>
-        </div>
+          <h2 className="t-heading mt-5 max-w-[22ch]">{about.heading}</h2>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="card-shell p-8 space-y-6">
-            <h3 className="text-xl font-semibold text-ink dark:text-white">Education</h3>
-            <div className="space-y-5">
-              {educationData.map((edu) => (
-                <div key={edu.id} className="rounded-2xl border border-brand/10 p-5 bg-white/70 dark:bg-white/5">
-                  <p className="text-sm uppercase tracking-wide text-brand">{edu.duration}</p>
-                  <h4 className="mt-2 text-lg font-semibold text-ink dark:text-white">{edu.degree}</h4>
-                  <p className="text-slate-600 dark:text-slate-300">{edu.institution}</p>
-                  <div className="mt-3 flex justify-between text-sm text-slate-500 dark:text-slate-400">
-                    <span>{edu.location}</span>
-                    <span>CGPA {edu.cgpa}</span>
-                  </div>
+          <ul className="mt-12 space-y-8" role="list">
+            {about.timeline.map((row) => (
+              <li key={row.title} className="grid gap-1 border-t border-ink/10 pt-6 sm:grid-cols-[1.2fr_1fr]">
+                <div>
+                  <p className="font-medium">{row.title}</p>
+                  <p className="t-sm text-stone">{row.place}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="card-shell p-8 space-y-6">
-            <h3 className="text-xl font-semibold text-ink dark:text-white">Recent spotlight</h3>
-            {projectsData.map((project) => (
-              <div key={project.id} className="rounded-2xl border border-white/40 bg-white/70 p-6 dark:bg-white/5">
-                <div className="flex items-center justify-between gap-4">
-                  <h4 className="text-lg font-semibold text-ink dark:text-white">
-                    {project.title === "summarAIze" ? (
-                      <>
-                        summar<span className="font-bold bg-gradient-to-r from-brand to-purple-500 bg-clip-text text-transparent">AI</span>ze
-                      </>
-                    ) : (
-                      project.title
-                    )}
-                  </h4>
-                  <span className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-300">{project.duration}</span>
-                </div>
-                <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{project.description}</p>
-                <ul className="mt-4 space-y-2 text-sm text-slate-600 dark:text-slate-300">
-                  {project.details.map((detail, index) => (
-                    <li key={index} className="flex gap-3">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-brand" />
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.tech.map((tech, index) => (
-                    <span key={index} className="pill-chip">{tech}</span>
-                  ))}
-                </div>
-              </div>
+                <p className="t-sm text-stone sm:text-right">{row.meta}</p>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
-        <div className="mt-16">
-          <div className="card-shell p-10">
-            <h3 className="text-center text-xl font-semibold text-ink dark:text-white mb-8">Technical stack I reach for</h3>
-            <div className="grid md:grid-cols-2 gap-6">
-              {skillsData.map((skillGroup, index) => (
-                <div key={index} className="rounded-2xl border border-white/50 bg-white/70 p-5 dark:bg-white/5">
-                  <p className="text-sm uppercase tracking-wide text-brand">{skillGroup.category}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {skillGroup.skills.map((skill, skillIndex) => (
-                      <span key={skillIndex} className="pill-chip">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+        <div className="space-y-6">
+          <div className="overflow-hidden rounded-[28px] bg-sandstone">
+            <img src={profilePicture} alt="Punith Gowda" className="aspect-[4/5] w-full object-cover" />
+          </div>
+          <div className="rounded-[28px] bg-white p-7">
+            <p className="t-micro text-stone">{about.offer.title}</p>
+            <p className="mt-3 text-[1.05rem] font-medium tracking-tight">{about.offer.copy}</p>
+            <ul className="mt-5 space-y-2">
+              {about.offer.items.map((item) => (
+                <li key={item} className="flex items-center gap-2 t-sm">
+                  <span className="h-1.5 w-1.5 rounded-full bg-coral" />
+                  {item}
+                </li>
               ))}
-            </div>
+            </ul>
+            <a href="#contact" className="pill mt-6 bg-grass text-ink">
+              Start a project
+              <span className="h-2 w-2 rounded-full bg-ink" aria-hidden="true" />
+            </a>
           </div>
         </div>
       </div>
     </section>
   )
 }
-
-export default About

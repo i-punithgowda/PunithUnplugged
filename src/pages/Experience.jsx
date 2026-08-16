@@ -1,12 +1,5 @@
-import React from 'react'
-import Experience from '../components/Experience'
+import Home from './Home'
 
-const ExperiencePage = () => {
-  return (
-    <div className="pt-20">
-      <Experience />
-    </div>
-  )
-}
+const ExperiencePage = () => <Home />
 
 export default ExperiencePage

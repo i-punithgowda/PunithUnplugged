@@ -1,12 +1,5 @@
-import React from 'react'
-import About from '../components/About'
+import Home from './Home'
 
-const AboutPage = () => {
-  return (
-    <div className="pt-20">
-      <About />
-    </div>
-  )
-}
+const AboutPage = () => <Home />
 
 export default AboutPage
