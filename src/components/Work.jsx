@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { projects } from '../data/content'
+import ProjectDialog from './ProjectDialog'
 import summarizeImg from '../assets/work/summarize.jpg'
 import yachthubImg from '../assets/work/yachthub.jpg'
 import mentoringImg from '../assets/work/mentoring.jpg'
@@ -45,22 +46,15 @@ export default function Work() {
   const rootRef = useRef(null)
   const [open, setOpen] = useState(null)
   const project = open != null ? projects[open] : null
+  const cardRefs = useRef([])
 
-  useEffect(() => {
-    if (open == null) return undefined
-    const onKey = (e) => {
-      if (e.key === 'Escape') setOpen(null)
-      if (e.key === 'ArrowRight') setOpen((i) => (i + 1) % projects.length)
-      if (e.key === 'ArrowLeft') setOpen((i) => (i - 1 + projects.length) % projects.length)
-    }
-    window.addEventListener('keydown', onKey)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = prev
-    }
-  }, [open])
+  const closeDialog = () => {
+    const i = open
+    setOpen(null)
+    requestAnimationFrame(() => {
+      cardRefs.current[i]?.focus({ preventScroll: true })
+    })
+  }
 
   useLayoutEffect(() => {
     const root = rootRef.current
@@ -228,8 +222,11 @@ export default function Work() {
             <div key={item.id} data-card="true">
               <button
                 type="button"
+                ref={(el) => {
+                  cardRefs.current[i] = el
+                }}
                 onClick={() => setOpen(i)}
-                aria-label={`${item.title} — ${item.status}. Open details.`}
+                aria-label={`${item.title}. Open details.`}
                 className="group flex aspect-[16/10] h-[30vh] shrink-0 flex-col rounded-[24px] bg-white p-2 text-left transition-transform duration-500 ease-out hover:-translate-y-1.5 md:h-[42vh]"
               >
                 <span className="relative block w-full grow overflow-hidden rounded-[16px] bg-sandstone">
@@ -246,12 +243,6 @@ export default function Work() {
                     aria-hidden="true"
                   />
                   <span className="t-micro min-w-0 truncate text-ink">{item.title}</span>
-                  <span
-                    className="t-micro ml-auto shrink-0 whitespace-nowrap"
-                    style={{ color: isLight(item.accent) ? '#2c2e2a' : item.accent }}
-                  >
-                    {item.status}
-                  </span>
                 </span>
               </button>
             </div>
@@ -268,87 +259,13 @@ export default function Work() {
       </div>
 
       {project && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-night/90 p-4 sm:p-8"
-          role="dialog"
-          aria-modal="true"
-          aria-label={project.title}
-          onClick={() => setOpen(null)}
-        >
-          <button
-            type="button"
-            className="absolute left-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink sm:flex"
-            aria-label="Previous project"
-            onClick={(e) => {
-              e.stopPropagation()
-              setOpen((i) => (i - 1 + projects.length) % projects.length)
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M15 6l-6 6 6 6" />
-            </svg>
-          </button>
-          <div
-            className="relative z-10 grid max-h-full w-full max-w-5xl overflow-y-auto rounded-[28px] bg-cream lg:grid-cols-[1.15fr_0.85fr]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="absolute right-4 top-4 z-20 flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink shadow-[0_8px_20px_-8px_#1e201b66]"
-              aria-label="Close"
-              onClick={(e) => {
-                e.stopPropagation()
-                setOpen(null)
-              }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </button>
-            <img
-              src={IMAGES[project.id]}
-              alt=""
-              className="aspect-[16/10] w-full object-cover lg:aspect-auto lg:h-full lg:min-h-[360px]"
-            />
-            <div className="flex flex-col justify-center p-7 sm:p-10">
-              <p className="t-micro flex items-center gap-2 text-stone">
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ background: project.accent }}
-                  aria-hidden="true"
-                />
-                {project.period}
-              </p>
-              <h3 className="mt-4 text-[clamp(1.6rem,3vw,2.4rem)] font-medium leading-[1.05] tracking-[-0.04em]">
-                {project.title}
-              </h3>
-              <p className="t-sm mt-2 text-stone">
-                {project.role} · {project.status}
-              </p>
-              <p className="mt-5 max-w-[42ch] text-[1.05rem] leading-relaxed">{project.summary}</p>
-              <ul className="mt-6 flex flex-wrap gap-2" role="list">
-                {project.stack.map((tech) => (
-                  <li key={tech} className="rounded-full bg-white px-3 py-1.5 t-sm">
-                    {tech}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          <button
-            type="button"
-            className="absolute right-4 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink sm:flex"
-            aria-label="Next project"
-            onClick={(e) => {
-              e.stopPropagation()
-              setOpen((i) => (i + 1) % projects.length)
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </button>
-        </div>
+        <ProjectDialog
+          project={project}
+          image={IMAGES[project.id]}
+          onClose={closeDialog}
+          onPrev={() => setOpen((i) => (i - 1 + projects.length) % projects.length)}
+          onNext={() => setOpen((i) => (i + 1) % projects.length)}
+        />
       )}
     </section>
   )

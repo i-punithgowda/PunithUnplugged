@@ -76,7 +76,18 @@ export const projects = [
     period: 'July 2025 – Present',
     summary:
       'Local-first Git branch diffs, summarized per file by Gemini 2.5 Flash — with rule-based code checks.',
-    stack: ['FastAPI', 'React', 'Python', 'Gemini', 'Docker'],
+    stack: ['FastAPI', 'React', 'Python', 'Gemini 2.5 Flash', 'Docker'],
+    architecture: [
+      { label: 'Git', icon: 'Git' },
+      { label: 'FastAPI', icon: 'FastAPI' },
+      { label: 'Gemini', icon: 'Gemini' },
+      { label: 'React', icon: 'React' },
+    ],
+    points: [
+      'Local-first tool to compare Git branches and generate per-file change summaries with Gemini 2.5 Flash.',
+      'FastAPI backend computes the diffs and extracts file-level code changes.',
+      'Rule-based analysis flags coding-standard violations with explanatory feedback.',
+    ],
   },
   {
     id: 'yachthub',
@@ -89,6 +100,17 @@ export const projects = [
     summary:
       'Internet pack bookings for harbours — berths, VLANs, invoices, and signed document delivery.',
     stack: ['Node.js', 'PostgreSQL', 'Redis', 'Google Cloud'],
+    architecture: [
+      { label: 'Node.js', icon: 'Node.js' },
+      { label: 'PostgreSQL', icon: 'PostgreSQL' },
+      { label: 'Redis', icon: 'Redis' },
+      { label: 'Cloud Storage', icon: 'Google Cloud' },
+    ],
+    points: [
+      'Transactional internet-pack bookings across harbours: berth-level availability, per-day operational events, and partial cancellations.',
+      'Berth assignment and VLAN mapping, with Redis caching for availability and pricing lookups.',
+      'Invoice and document delivery via Google Cloud Storage — signed URLs, CDN-backed access, and role-based admin workflows.',
+    ],
   },
   {
     id: 'mentoring',
@@ -101,18 +123,43 @@ export const projects = [
     summary:
       'Multi-university mentoring, exams, live chat, and student progress — GPA, EPA, logbooks.',
     stack: ['React', 'Node.js', 'MySQL', 'Sequelize', 'WebSockets'],
+    architecture: [
+      { label: 'React', icon: 'React' },
+      { label: 'Node.js', icon: 'Node.js' },
+      { label: 'WebSockets', icon: 'WebSockets' },
+      { label: 'MySQL', icon: 'MySQL' },
+    ],
+    points: [
+      'Multi-university system for student records, online exams, scores, logbooks, EPA, and assessments.',
+      'Mentoring module with appointment timeslots, live chat over WebSockets, and performance views (GPA, GPAX, semester marks).',
+      'Singleton DB connection so one backend can reach multiple university databases through a master DB.',
+      'Admin settings for phases, academic years, and mentor-to-student assignments.',
+      'Admin dashboard for Logbook, EPA Progress, Longitudinal Pool, and Excellence metrics.',
+    ],
   },
   {
     id: 'edtech',
     title: 'EdTech Performance',
-    status: '3 min → <5s',
+    status: 'Shipped',
     accent: '#8ed462',
     ink: '#2c2e2a',
     role: 'Backend developer',
     period: 'Dec 2023 – May 2024',
     summary:
-      'Profiled a legacy PHP backend, rewrote the hot path, and moved core modules to Node.js.',
+      'Profiled a legacy PHP backend, rewrote the hot path, and moved core modules to Node.js — 3 min down to under 5s.',
     stack: ['Node.js', 'PHP', 'MySQL'],
+    architecture: [
+      { label: 'PHP', icon: 'PHP' },
+      { label: 'MySQL', icon: 'MySQL' },
+      { label: 'Node.js', icon: 'Node.js' },
+    ],
+    points: [
+      'Profiled a legacy PHP backend with complex SQL and request-processing flows.',
+      'Cut API response times from about 3 minutes to under 5 seconds.',
+      'Stored procedures brought heavy query time from around 40 seconds to 1 second.',
+      'Moved core backend modules from PHP to Node.js for maintainability and async handling.',
+      'Data fetching and filtering scaled to thousands of student records after the migration.',
+    ],
   },
 ]
 
