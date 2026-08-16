@@ -1,131 +1,132 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { useTheme } from '../contexts/ThemeContext'
+import { useEffect, useState } from 'react'
+import { navItems, person } from '../data/content'
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('home')
-  const location = useLocation()
-  const { isDarkMode, toggleTheme } = useTheme()
+const NIGHT_SECTIONS = ['method', 'work', 'experience', 'contact']
 
-  const navItems = [
-    { path: '#home', label: 'Home', id: 'home' },
-    { path: '#about', label: 'About', id: 'about' },
-    { path: '#experience', label: 'Experience', id: 'experience' },
-    { path: '#contact', label: 'Contact', id: 'contact' }
-  ]
+export default function Header() {
+  const [open, setOpen] = useState(false)
+  const [onNight, setOnNight] = useState(false)
+  const [active, setActive] = useState('')
 
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item => item.id)
-      const scrollPosition = window.scrollY + 150
+    const nightNodes = NIGHT_SECTIONS.map((id) => document.getElementById(id)).filter(Boolean)
+    const spyNodes = navItems
+      .map((item) => ({
+        href: item.href,
+        el: document.getElementById(item.href.slice(1)),
+      }))
+      .filter((item) => item.el)
 
-      for (const section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const { offsetTop, offsetHeight } = element
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(section)
-            break
-          }
-        }
+    const update = () => {
+      const y = 88
+      let current = ''
+      for (const item of spyNodes) {
+        if (item.el.getBoundingClientRect().top <= y) current = item.href
       }
+      setActive(current)
+
+      if (document.documentElement.dataset.dockLock) return
+      const hit = nightNodes.some((el) => {
+        const r = el.getBoundingClientRect()
+        return r.top <= 40 && r.bottom > 40
+      })
+      setOnNight(hit)
     }
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    update()
+    window.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('dockchange', update)
+    return () => {
+      window.removeEventListener('scroll', update)
+      window.removeEventListener('dockchange', update)
+    }
   }, [])
 
+  useEffect(() => {
+    if (document.documentElement.dataset.dockLock) return
+    document.documentElement.style.setProperty('--dock-fg', onNight ? '#f5f1e4' : '#2c2e2a')
+  }, [onNight])
+
   return (
-    <header className="sticky top-0 z-50 border-b border-white/60 bg-white/80 backdrop-blur-2xl dark:bg-dark-bg/70 dark:border-white/5 transition-colors duration-300">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <Link to="/" className="text-xl font-semibold tracking-tight text-ink dark:text-white">
-            Punith <span className="text-brand">Gowda</span>
-          </Link>
+    <header
+      className="fixed inset-x-0 top-0 z-40 transition-colors duration-500"
+      style={{ color: 'var(--dock-fg, currentColor)' }}
+    >
+      <div className="wrap flex h-16 items-center justify-between">
+        <a href="#top" className="text-[15px] font-medium uppercase tracking-[0.14em]">
+          {person.name}
+        </a>
 
-          <nav className="hidden md:flex items-center space-x-6">
-            {navItems.map((item) => (
-              <a
-                key={item.path}
-                href={item.path}
-                className={`relative text-sm font-medium tracking-wide transition-colors ${
-                  activeSection === item.id
-                    ? 'text-brand'
-                    : 'text-slate-500 dark:text-slate-300 hover:text-ink dark:hover:text-white'
-                }`}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <span className="absolute -bottom-2 left-0 right-0 h-0.5 bg-brand rounded-full"></span>
-                )}
-              </a>
-            ))}
-          </nav>
+        <nav aria-label="Site" className="hidden md:block">
+          <ul className="flex items-center gap-5 lg:gap-8" role="list">
+            {navItems.map((item) => {
+              const isActive = active === item.href
+              return (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    aria-current={isActive ? 'true' : undefined}
+                    className={`text-[12px] font-medium uppercase tracking-[0.1em] transition-opacity duration-300 lg:text-[13px] lg:tracking-[0.12em] ${
+                      isActive ? 'opacity-100' : 'opacity-50 hover:opacity-100'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
 
-          <div className="flex items-center space-x-3">
-            <button
-              onClick={toggleTheme}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/60 bg-white/70 text-ink shadow-sm transition hover:border-brand hover:text-brand dark:bg-surface-card-dark/60 dark:text-white"
-              aria-label="Toggle dark mode"
-            >
-              {isDarkMode ? (
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              ) : (
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                </svg>
-              )}
-            </button>
-
-            <a
-              href="#contact"
-              className="hidden md:inline-flex items-center rounded-full bg-brand text-white text-sm font-semibold tracking-wide px-5 py-2.5 shadow-card transition hover:bg-brand-deep"
-            >
-              Let’s talk
-            </a>
-
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden inline-flex items-center justify-center p-2 rounded-full border border-white/60 text-slate-600 hover:border-brand hover:text-brand dark:text-white"
-              aria-label="Toggle navigation menu"
-            >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {isMenuOpen && (
-          <div className="md:hidden pb-4">
-            <div className="rounded-2xl border border-white/60 bg-white/90 shadow-card dark:bg-surface-card-dark/80 dark:border-white/10">
-              {navItems.map((item) => (
-                <a
-                  key={item.path}
-                  href={item.path}
-                  className={`block px-5 py-3 text-sm font-medium transition-colors ${
-                    activeSection === item.id
-                      ? 'text-brand'
-                      : 'text-slate-600 dark:text-slate-200 hover:text-brand'
-                  }`}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls="site-menu"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          className="flex h-11 w-11 items-center justify-center md:hidden"
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <path d="M4 5h16M4 12h16M4 19h16" />
+            </svg>
+          )}
+        </button>
       </div>
+
+      {open && (
+        <div
+          id="site-menu"
+          className="border-t border-ink/10 bg-cream text-ink md:hidden"
+        >
+          <ul className="wrap py-4" role="list">
+            {navItems.map((item) => {
+              const isActive = active === item.href
+              return (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    aria-current={isActive ? 'true' : undefined}
+                    className={`flex items-center gap-2.5 py-3 text-[15px] font-medium uppercase tracking-[0.12em] ${
+                      isActive ? 'opacity-100' : 'opacity-55'
+                    }`}
+                    onClick={() => setOpen(false)}
+                  >
+                    {isActive && (
+                      <span className="h-1.5 w-1.5 rounded-full bg-grass" aria-hidden="true" />
+                    )}
+                    {item.label}
+                  </a>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      )}
     </header>
   )
 }
-
-export default Header
