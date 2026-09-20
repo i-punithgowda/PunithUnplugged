@@ -134,11 +134,7 @@ export default function Skills() {
             key={item.name}
             className="flex min-h-11 items-center gap-2 rounded-full bg-white px-4 text-ink"
           >
-            {hasTechIcon(item.name) ? (
-              <TechIcon name={item.name} size={16} />
-            ) : (
-              <span className="h-1.5 w-1.5 rounded-full bg-coral" aria-hidden="true" />
-            )}
+            {hasTechIcon(item.name) && <TechIcon name={item.name} size={16} />}
             <span className="t-label">{item.name}</span>
           </li>
         ))}

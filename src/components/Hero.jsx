@@ -10,7 +10,7 @@ export default function Hero() {
     >
       <p
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-[22%] z-0 w-full -translate-x-1/2 select-none text-center font-display text-[clamp(3.6rem,20vw,7rem)] font-extrabold uppercase leading-[0.88] tracking-[-0.05em] text-cream/[0.12] lg:top-[46%] lg:-translate-y-1/2 lg:text-[clamp(4.5rem,18vw,14rem)] lg:text-cream/[0.1]"
+        className="pointer-events-none absolute inset-x-0 z-0 select-none text-center font-display font-extrabold uppercase leading-[0.88] tracking-[-0.05em] text-cream/[0.11] max-lg:bottom-[8%] max-lg:top-auto max-lg:text-[clamp(3.2rem,18vw,5.5rem)] lg:top-[46%] lg:left-1/2 lg:w-full lg:-translate-x-1/2 lg:-translate-y-1/2 lg:text-[clamp(4.5rem,18vw,14rem)] lg:text-cream/[0.1]"
       >
         {hero.watermark.map((line) => (
           <span key={line} className="block">
