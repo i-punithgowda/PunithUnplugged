@@ -7,7 +7,7 @@ export default function About() {
       <div className="wrap grid items-start gap-12 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
           <p className="t-micro flex items-center gap-2.5">
-            <span className="h-2 w-2 rounded-full bg-grass" aria-hidden="true" />
+            <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
             {about.kicker}
           </p>
           <h2 className="t-heading mt-5 max-w-[22ch]">{about.heading}</h2>
@@ -40,9 +40,9 @@ export default function About() {
                 </li>
               ))}
             </ul>
-            <a href="#contact" className="pill mt-6 bg-grass text-ink">
+            <a href="#contact" className="pill mt-6 bg-ink text-cream">
               Start a project
-              <span className="h-2 w-2 rounded-full bg-ink" aria-hidden="true" />
+              <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
             </a>
           </div>
         </div>

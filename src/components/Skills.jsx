@@ -75,10 +75,14 @@ export default function Skills() {
   }, [filter])
 
   return (
-    <section id="skills" aria-label="Skills" className="band relative scroll-mt-16 overflow-hidden">
+    <section
+      id="skills"
+      aria-label="Skills"
+      className="relative scroll-mt-16 overflow-hidden pb-[clamp(88px,11vh,136px)] pt-6"
+    >
       <Marquee names={MARQUEE} />
 
-      <div className="wrap mt-16 text-center">
+      <div className="wrap mt-14 text-center">
         <p className="t-micro flex items-center justify-center gap-2.5">
           <span className="h-2 w-2 rounded-full bg-sky" aria-hidden="true" />
           {skills.kicker}
@@ -133,7 +137,7 @@ export default function Skills() {
             {hasTechIcon(item.name) ? (
               <TechIcon name={item.name} size={16} />
             ) : (
-              <span className="h-1.5 w-1.5 rounded-full bg-grass" aria-hidden="true" />
+              <span className="h-1.5 w-1.5 rounded-full bg-coral" aria-hidden="true" />
             )}
             <span className="t-label">{item.name}</span>
           </li>

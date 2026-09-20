@@ -49,8 +49,8 @@ export default function Contact() {
       <div className="wrap flex flex-col items-center text-center">
         <p className="t-micro flex items-center gap-2.5 text-fog">
           <span className="relative inline-flex h-2 w-2">
-            <span className="live-ring absolute inset-0 rounded-full border border-grass" />
-            <span className="h-2 w-2 rounded-full bg-grass" />
+            <span className="live-ring absolute inset-0 rounded-full border border-coral" />
+            <span className="h-2 w-2 rounded-full bg-coral" />
           </span>
           {contact.kicker}
         </p>
@@ -66,7 +66,7 @@ export default function Contact() {
         >
           <path
             d="M6 16 C 26 4, 44 22, 64 13 C 84 4, 100 22, 120 13 C 140 4, 156 22, 176 13 C 196 4, 214 20, 234 11"
-            stroke="var(--color-grass)"
+            stroke="var(--color-coral)"
             strokeWidth="7"
             strokeLinecap="round"
           />
@@ -88,7 +88,7 @@ export default function Contact() {
               <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
             </svg>
           </button>
-          <span aria-live="polite" className="t-micro text-grass">
+          <span aria-live="polite" className="t-micro text-coral">
             {copied ? 'Copied' : ''}
           </span>
         </div>

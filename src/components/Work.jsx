@@ -4,13 +4,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { projects } from '../data/content'
 import ProjectDialog from './ProjectDialog'
 import summarizeImg from '../assets/work/summarize.jpg'
-import yachthubImg from '../assets/work/yachthub.jpg'
+import eatozoneImg from '../assets/work/eatozone.jpg'
+import ifaclickImg from '../assets/work/ifaclick.jpg'
 import mentoringImg from '../assets/work/mentoring.jpg'
 import edtechImg from '../assets/work/edtech.jpg'
 
 const IMAGES = {
   summarize: summarizeImg,
-  yachthub: yachthubImg,
+  eatozone: eatozoneImg,
+  ifaclick: ifaclickImg,
   mentoring: mentoringImg,
   edtech: edtechImg,
 }
@@ -253,7 +255,7 @@ export default function Work() {
           data-work-chip="true"
           className="t-micro absolute left-1/2 top-[calc(max(20px,env(safe-area-inset-top))+56px)] flex -translate-x-1/2 items-center gap-2.5 whitespace-nowrap rounded-full bg-white px-4 py-2 text-ink"
         >
-          <span className="h-2 w-2 rounded-full bg-grass" aria-hidden="true" />
+          <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
           The work
         </p>
       </div>

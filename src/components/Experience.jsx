@@ -77,7 +77,7 @@ export default function Experience() {
           <span
             data-line
             aria-hidden="true"
-            className="absolute bottom-4 left-[5px] top-4 w-px origin-top scale-y-0 bg-grass md:left-[calc(11rem+5px)] motion-reduce:scale-y-100"
+            className="absolute bottom-4 left-[5px] top-4 w-px origin-top scale-y-0 bg-coral md:left-[calc(11rem+5px)] motion-reduce:scale-y-100"
           />
 
           {experience.map((item) => (
@@ -91,7 +91,7 @@ export default function Experience() {
               </p>
               <span
                 className={`relative z-10 mt-2 h-2.5 w-2.5 rounded-full ${
-                  item.mark ? 'bg-grass live-ring' : 'bg-cream/35'
+                  item.mark ? 'bg-coral live-ring' : 'bg-cream/35'
                 }`}
                 aria-hidden="true"
               />
@@ -99,7 +99,7 @@ export default function Experience() {
                 <div className="flex flex-wrap items-center gap-3">
                   <p className="t-micro text-fog md:hidden">{item.year}</p>
                   {item.mark && (
-                    <span className="pill h-8 min-h-8 bg-grass px-3 text-[12px] text-ink">{item.mark}</span>
+                    <span className="pill h-8 min-h-8 bg-coral px-3 text-[12px] text-ink">{item.mark}</span>
                   )}
                 </div>
                 <h3

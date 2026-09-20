@@ -44,7 +44,7 @@ export default function Intro() {
       <div aria-hidden="true" className="pointer-events-none absolute -left-24 top-16 hidden h-56 w-56 animate-drift md:block">
         <svg viewBox="0 0 200 200" className="h-full w-full">
           <path
-            fill="var(--color-grass)"
+            fill="var(--color-coral)"
             d="M48 96 C 44 48 92 20 132 36 C 174 53 184 104 160 144 C 135 184 72 184 52 148 C 40 127 50 118 48 96 Z"
           />
         </svg>
@@ -58,8 +58,8 @@ export default function Intro() {
       <div className="wrap">
         <p className="t-micro flex items-center gap-2.5">
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-live rounded-full bg-grass" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-grass" />
+            <span className="absolute inline-flex h-full w-full animate-live rounded-full bg-coral" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-coral" />
           </span>
           {intro.kicker}
         </p>
@@ -67,11 +67,11 @@ export default function Intro() {
         <h2 className="t-heading mt-8 max-w-[24ch]">{intro.heading}</h2>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <a href="#work" className="pill bg-grass text-ink">
+          <a href="#work" className="pill bg-coral text-ink">
             See the work
-            <span className="h-2 w-2 rounded-full bg-ink" aria-hidden="true" />
+            <span className="h-2 w-2 rounded-full bg-cream" aria-hidden="true" />
           </a>
-          <a href="#method" className="pill pillow rounded-full">
+          <a href="#experience" className="pill pillow rounded-full">
             How I ship
             <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
           </a>
