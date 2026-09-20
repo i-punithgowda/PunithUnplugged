@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { navItems, person } from '../data/content'
 
-const NIGHT_SECTIONS = ['method', 'work', 'experience', 'contact']
+const LIGHT_SECTIONS = ['top', 'work', 'experience', 'contact']
 
 export default function Header() {
   const [open, setOpen] = useState(false)
-  const [onNight, setOnNight] = useState(false)
+  const [onLight, setOnLight] = useState(true)
   const [active, setActive] = useState('')
 
   useEffect(() => {
-    const nightNodes = NIGHT_SECTIONS.map((id) => document.getElementById(id)).filter(Boolean)
+    const lightNodes = LIGHT_SECTIONS.map((id) => document.getElementById(id)).filter(Boolean)
     const spyNodes = navItems
       .map((item) => ({
         href: item.href,
@@ -26,11 +26,11 @@ export default function Header() {
       setActive(current)
 
       if (document.documentElement.dataset.dockLock) return
-      const hit = nightNodes.some((el) => {
+      const hit = lightNodes.some((el) => {
         const r = el.getBoundingClientRect()
         return r.top <= 40 && r.bottom > 40
       })
-      setOnNight(hit)
+      setOnLight(hit)
     }
 
     update()
@@ -44,8 +44,8 @@ export default function Header() {
 
   useEffect(() => {
     if (document.documentElement.dataset.dockLock) return
-    document.documentElement.style.setProperty('--dock-fg', onNight ? '#f5f1e4' : '#2c2e2a')
-  }, [onNight])
+    document.documentElement.style.setProperty('--dock-fg', onLight ? '#f5f1e4' : '#2c2e2a')
+  }, [onLight])
 
   return (
     <header
@@ -117,7 +117,7 @@ export default function Header() {
                     onClick={() => setOpen(false)}
                   >
                     {isActive && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-grass" aria-hidden="true" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-coral" aria-hidden="true" />
                     )}
                     {item.label}
                   </a>

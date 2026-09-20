@@ -33,7 +33,7 @@ export default function Ribbon() {
   }, [])
 
   return (
-    <div ref={rootRef} aria-hidden="true" className="pointer-events-none -my-[3vw] overflow-hidden">
+    <div ref={rootRef} aria-hidden="true" className="pointer-events-none relative z-20 -mt-[clamp(28px,4vw,52px)] -mb-[clamp(36px,5vw,64px)] overflow-hidden">
       <svg viewBox="0 0 1440 330" className="block w-[130%] -translate-x-[12%]" fill="none">
         <path
           id="fact-ribbon"

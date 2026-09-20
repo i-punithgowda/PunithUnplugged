@@ -42,9 +42,9 @@ function DevicesVisual() {
     <div className="relative h-full">
       <div className="absolute left-[7%] top-[10%] h-[62%] w-[64%] overflow-hidden rounded-[8px] bg-white shadow-[0_8px_14px_-6px_rgba(30,32,27,0.4)]">
         <div className="flex h-[22%] items-center gap-[3px] bg-[#24344c] px-1.5">
-          <span className="h-[5px] w-[5px] rounded-full bg-[#ff705d]" />
+          <span className="h-[5px] w-[5px] rounded-full bg-[#ff8a3c]" />
           <span className="h-[5px] w-[5px] rounded-full bg-[#f5e211]" />
-          <span className="h-[5px] w-[5px] rounded-full bg-[#8ed462]" />
+          <span className="h-[5px] w-[5px] rounded-full bg-[#2ba0ff]" />
         </div>
         <div className="space-y-1 p-1.5">
           <div className="relative h-7 overflow-hidden rounded-[4px] bg-[#cfe8ff]">
@@ -111,7 +111,7 @@ function LiveVisual() {
         Live
       </span>
       <div className="mt-1 flex items-end gap-1">
-        <span className="h-5 w-5 shrink-0 rounded-full bg-[#8ed462] shadow-sm" />
+        <span className="h-5 w-5 shrink-0 rounded-full bg-[#ff8a3c] shadow-sm" />
         <span className="h-7 flex-1 rounded-2xl rounded-bl-sm bg-white shadow-[0_4px_10px_-4px_rgba(30,32,27,0.35)]" />
       </div>
       <div className="mt-1.5 flex items-end justify-end gap-1">
@@ -133,7 +133,7 @@ function DataVisual() {
       <div className="flex items-center justify-center rounded-[8px] bg-white shadow-[0_4px_10px_-4px_rgba(30,32,27,0.3)]">
         <span
           className="h-9 w-9 rounded-full"
-          style={{ background: 'conic-gradient(#2ba0ff 0 140deg, #8ed462 140deg 230deg, #f5e211 230deg 300deg, #ff705d 300deg 360deg)' }}
+          style={{ background: 'conic-gradient(#2ba0ff 0 140deg, #ff8a3c 140deg 230deg, #f5e211 230deg 300deg, #FF007F 300deg 360deg)' }}
         />
       </div>
       <div className="col-span-2 flex items-end rounded-[8px] bg-white px-1.5 py-1 shadow-[0_4px_10px_-4px_rgba(30,32,27,0.3)]">

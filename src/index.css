@@ -11,22 +11,22 @@
   --color-night-soft: #2e312b;
   --color-stone: #80827f;
   --color-fog: #a3a69e;
-  --color-grass: #8ed462;
   --color-sky: #2ba0ff;
-  --color-coral: #ff705d;
+  --color-coral: #ff8a3c;
+  --color-coral-deep: #e86a1a;
   --color-sun: #f5e211;
-  --dock-fg: #2c2e2a;
+  --dock-fg: #f5f1e4;
 }
 
 html {
-  background: var(--color-grass);
+  background: #ff3b08;
   scroll-behavior: smooth;
   overflow-x: clip;
   overscroll-behavior-y: contain;
 }
 
 body {
-  background: var(--color-grass);
+  background: #ff3b08;
   color: var(--color-ink);
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 1.0625rem;
@@ -36,7 +36,7 @@ body {
 }
 
 ::selection {
-  background: var(--color-grass);
+  background: var(--color-coral);
   color: var(--color-ink);
 }
 
@@ -182,10 +182,10 @@ body {
     pointer-events: none;
     background: linear-gradient(
       90deg,
-      var(--color-grass) 0,
-      #8ed46200 var(--deck-fade),
-      #8ed46200 calc(100% - var(--deck-fade)),
-      var(--color-grass) 100%
+      var(--color-coral) 0,
+      #ff8a3c00 var(--deck-fade),
+      #ff8a3c00 calc(100% - var(--deck-fade)),
+      var(--color-coral) 100%
     );
     position: absolute;
     inset: -12% -1px;
@@ -203,6 +203,25 @@ body {
     animation: 2s cubic-bezier(0.33, 1, 0.68, 1) infinite live-pulse;
   }
 
+  .hero-band {
+    background: linear-gradient(
+      115deg,
+      #ff7514 0%,
+      #ff3b08 25%,
+      #ff1f00 55%,
+      #ff2d04 100%
+    );
+  }
+
+  .hero-name-soft {
+    color: rgba(245, 241, 228, 0.28);
+  }
+
+  .hero-blob {
+    border-radius: 62% 38% 48% 52% / 48% 42% 58% 52%;
+    box-shadow: 0 28px 60px -28px rgba(30, 32, 27, 0.45);
+  }
+
   .places-map svg {
     display: block;
     width: 100%;
@@ -218,7 +237,7 @@ body {
   .places-map [id='in'],
   .places-map [id='ae'],
   .places-map [id='th'] {
-    fill: #8ed462;
+    fill: #ff8a3c;
   }
 }
 

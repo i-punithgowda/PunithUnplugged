@@ -42,7 +42,7 @@ export default function Places() {
     >
       <div className="wrap">
         <p className="t-micro flex items-center gap-2.5 text-fog">
-          <span className="h-2 w-2 rounded-full bg-grass" aria-hidden="true" />
+          <span className="h-2 w-2 rounded-full bg-coral" aria-hidden="true" />
           {reach.kicker}
         </p>
         <h2 className="t-heading mt-5 max-w-[20ch]">{reach.heading}</h2>
@@ -64,8 +64,8 @@ export default function Places() {
             >
               {MARKS.map((mark) => (
                 <g key={mark.id}>
-                  <circle cx={mark.x} cy={mark.y} r="11" fill="#8ed462" fillOpacity="0.22" />
-                  <circle cx={mark.x} cy={mark.y} r="4.8" fill="#ff705d" />
+                  <circle cx={mark.x} cy={mark.y} r="11" fill="#ff8a3c" fillOpacity="0.22" />
+                  <circle cx={mark.x} cy={mark.y} r="4.8" fill="#ff8a3c" />
                   <circle cx={mark.x} cy={mark.y} r="1.7" fill="#f5f1e4" />
                 </g>
               ))}

@@ -1,18 +1,56 @@
 /** Career start — experience years are derived from this, not hardcoded. */
 export const WORK_STARTED = new Date(2023, 7, 1) // 1 Aug 2023
 
+/** Birth date — age is derived from this, not hardcoded. */
+export const BORN = new Date(2000, 3, 17) // 17 Apr 2000
+
 export function getYearsExperience(now = new Date()) {
-  const months =
+  let months =
     (now.getFullYear() - WORK_STARTED.getFullYear()) * 12 +
     (now.getMonth() - WORK_STARTED.getMonth())
+  if (now.getDate() < WORK_STARTED.getDate()) months -= 1
   const years = Math.max(0, months / 12)
-  return (Math.floor(years * 10) / 10).toFixed(1)
+  const rounded = Math.floor(years * 10) / 10
+  return Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1)
+}
+
+export function getAge(now = new Date()) {
+  let age = now.getFullYear() - BORN.getFullYear()
+  const monthDiff = now.getMonth() - BORN.getMonth()
+  if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < BORN.getDate())) age -= 1
+  return Math.max(0, age)
+}
+
+const AGE_WORDS = {
+  20: 'Twenty',
+  21: 'Twenty-one',
+  22: 'Twenty-two',
+  23: 'Twenty-three',
+  24: 'Twenty-four',
+  25: 'Twenty-five',
+  26: 'Twenty-six',
+  27: 'Twenty-seven',
+  28: 'Twenty-eight',
+  29: 'Twenty-nine',
+  30: 'Thirty',
+  31: 'Thirty-one',
+  32: 'Thirty-two',
+  33: 'Thirty-three',
+  34: 'Thirty-four',
+  35: 'Thirty-five',
+}
+
+export function getAgeWords(now = new Date()) {
+  const age = getAge(now)
+  return AGE_WORDS[age] ?? String(age)
 }
 
 export const person = {
   name: 'Punith Gowda',
+  firstName: 'Punith',
+  lastName: 'Gowda',
   displayName: 'PUNITH GOWDA',
-  role: 'Full-stack developer',
+  role: 'Software engineer',
   location: 'Bengaluru',
   get micro() {
     return `${getYearsExperience()}+ years shipping products · Bengaluru`
@@ -22,8 +60,20 @@ export const person = {
   linkedin: 'https://www.linkedin.com/in/punith-gowda-s-p-7452391b8',
 }
 
+export const hero = {
+  kicker: 'Software engineer · Bengaluru',
+  line: 'I ship products end to end — systems, AI, and the interface. Fast when it matters; careful where it counts.',
+  watermark: ['SOFTWARE', 'ENGINEER'],
+  primaryCta: { href: '#work', label: 'See the work' },
+  secondaryCta: { href: '#contact', label: 'Contact' },
+  stats: [
+    { id: 'years', suffix: '+', label: 'Years exp.' },
+    { id: 'products', value: '5', suffix: '+', label: 'Products' },
+    { id: 'awards', value: '5', suffix: '', label: 'Awards' },
+  ],
+}
+
 export const navItems = [
-  { href: '#method', label: 'Method' },
   { href: '#work', label: 'Work' },
   { href: '#skills', label: 'Skills' },
   { href: '#experience', label: 'Experience' },
@@ -34,30 +84,18 @@ export const navItems = [
 ]
 
 export const intro = {
-  kicker: 'Full-stack developer · Bengaluru',
+  kicker: 'Available to build · Bengaluru',
   heading:
-    'I translate complex business goals into complete products. Fast to ship — the architecture and the review are mine.',
+    'From messy requirements to production systems — architecture, review, and the parts that usually slip.',
   stats: [
-    { id: 'years', suffix: '+', label: 'Years shipping full-stack products', ring: 'var(--color-grass)' },
+    { id: 'years', suffix: '+', label: 'Years shipping products', ring: 'var(--color-sun)' },
     { id: 'products', value: 5, suffix: '', label: 'Products launched, from MVP to scale', ring: 'var(--color-sky)' },
     { id: 'problems', display: '∞', suffix: '', label: 'Problems solved along the way', ring: 'var(--color-coral)' },
   ],
 }
 
-export const method = {
-  kicker: 'How I build',
-  heading: 'I build end to end. Nothing ships that I haven’t read, run, and understood.',
-  steps: [
-    { n: 1, title: 'Brief', detail: 'Requirements, and the taste bar' },
-    { n: 2, title: 'Spec', detail: 'Architecture, data model, constraints' },
-    { n: 3, title: 'Build', detail: 'Implementation, full-stack' },
-    { n: 4, title: 'Review', detail: 'Profile it, run it, fix it' },
-    { n: 5, title: 'Ship', detail: 'Deploy, observe, harden' },
-  ],
-}
-
 export const crafts = [
-  { id: 'devices', title: 'Web + mobile', accent: '#ff705d' },
+  { id: 'devices', title: 'Web + mobile', accent: '#ff8a3c' },
   { id: 'pay', title: 'Payments', accent: '#f5e211' },
   { id: 'live', title: 'Realtime', accent: '#FF007F' },
   { id: 'data', title: 'Data', accent: '#2ba0ff' },
@@ -68,14 +106,14 @@ export const crafts = [
 export const projects = [
   {
     id: 'summarize',
-    title: 'Git Diff Summarizer',
+    title: 'ReviewPulse',
     status: 'Present',
     accent: '#7c5cff',
     ink: '#2c2e2a',
     role: 'Builder',
     period: 'July 2025 – Present',
     summary:
-      'Local-first Git branch diffs, summarized per file by Gemini 2.5 Flash — with rule-based code checks.',
+      'Local-first code review assistant — Git branch diffs, per-file Gemini insights, and rule-based checks.',
     stack: ['FastAPI', 'React', 'Python', 'Gemini 2.5 Flash', 'Docker'],
     architecture: [
       { label: 'Git', icon: 'Git' },
@@ -84,41 +122,71 @@ export const projects = [
       { label: 'React', icon: 'React' },
     ],
     points: [
-      'Local-first tool to compare Git branches and generate per-file change summaries with Gemini 2.5 Flash.',
-      'FastAPI backend computes the diffs and extracts file-level code changes.',
-      'Rule-based analysis flags coding-standard violations with explanatory feedback.',
+      'Local-first tool that analyzes Git branch changes and generates structured, per-file review insights with Gemini 2.5 Flash.',
+      'FastAPI backend computes diffs, extracts file-level changes, and orchestrates automated review workflows.',
+      'Rule-based checks flag coding-standard violations with clear, actionable recommendations.',
+      'PR-style diff views with highlighted changes and annotations cut manual review time by about 30%.',
     ],
   },
   {
-    id: 'yachthub',
-    title: 'YachtHub',
-    status: 'Shipped',
-    accent: '#ff705d',
+    id: 'eatozone',
+    title: 'Eatozone',
+    status: 'Present',
+    accent: '#ff8a3c',
     ink: '#2c2e2a',
-    role: 'Backend developer',
-    period: 'Aug 2024 – Jan 2025',
+    role: 'Senior Software Engineer',
+    period: 'Aug 2023 – Present',
     summary:
-      'Internet pack bookings for harbours — berths, VLANs, invoices, and signed document delivery.',
-    stack: ['Node.js', 'PostgreSQL', 'Redis', 'Google Cloud'],
+      'Multi-tenant restaurant & cafeteria SaaS — React dashboard, QR ordering, React Native apps, real-time KOT.',
+    stack: ['Java', 'Spring Boot', 'Node.js', 'React', 'React Native', 'PostgreSQL', 'Redis', 'AWS'],
     architecture: [
-      { label: 'Node.js', icon: 'Node.js' },
+      { label: 'Java', icon: 'Java' },
+      { label: 'React', icon: 'React' },
       { label: 'PostgreSQL', icon: 'PostgreSQL' },
-      { label: 'Redis', icon: 'Redis' },
-      { label: 'Cloud Storage', icon: 'Google Cloud' },
+      { label: 'AWS', icon: 'AWS' },
     ],
     points: [
-      'Transactional internet-pack bookings across harbours: berth-level availability, per-day operational events, and partial cancellations.',
-      'Berth assignment and VLAN mapping, with Redis caching for availability and pricing lookups.',
-      'Invoice and document delivery via Google Cloud Storage — signed URLs, CDN-backed access, and role-based admin workflows.',
+      'Multi-tenant platform for 25+ restaurant and cafeteria tenants — React dashboard, QR-ordering site, and two React Native apps on Java/Spring Boot and Node.js services.',
+      'PostgreSQL multi-tenancy with tenant-resolution middleware, schema provisioning, and Liquibase migrations — new-tenant setup from 3 days to under 4 hours.',
+      'Ledger batch service on Java virtual threads for 20 tenants; pluggable payment gateways for Razorpay, PhonePe, and PayU.',
+      'AWS SQS notification pipeline delivering 80K+ email, SMS, and push messages per month with retry safeguards.',
+      'Cut p95 on high-traffic read APIs from 500–1,000 ms to under 100 ms at 200 concurrent users via Redis, SQL tuning, and KOT list virtualization.',
+      'Secured 20+ tenant accounts with Firebase Auth, JWT, entity-level RBAC, and Cognito-backed SSO.',
+    ],
+  },
+  {
+    id: 'ifaclick',
+    title: 'IFAclick',
+    status: 'Present',
+    accent: '#0d9488',
+    ink: '#2c2e2a',
+    role: 'Senior Software Engineer',
+    period: 'Aug 2023 – Present',
+    summary:
+      'Multi-tenant mutual fund CRM — portfolios, SIPs, RTA ingestion, and insurance workflows for 40+ MFDs.',
+    stack: ['Next.js', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL', 'AWS'],
+    architecture: [
+      { label: 'Next.js', icon: 'Next.js' },
+      { label: 'Node.js', icon: 'Node.js' },
+      { label: 'PostgreSQL', icon: 'PostgreSQL' },
+      { label: 'Python', icon: 'Python' },
+    ],
+    points: [
+      'Multi-tenant SaaS CRM for 40+ Mutual Fund Distributors — clients, portfolios, SIP tracking, risk profiling, documents, and RTA-fed data.',
+      'End-to-end CAMS/KFin RTA ingestion with Python, Node.js, and PostgreSQL — up to 200K transactions per sync, S3 archival, and folio/SIP sync.',
+      'Moved high-volume RTA sync from HTTP processing to direct PostgreSQL writes with staging, batches, and advisory locks — 60% faster imports.',
+      'Investment and SIP workflows on Node.js/Express and Next.js for 25K+ investor accounts with live RTA-backed metrics.',
+      'Insurance workflows covering 3,000+ policies — PDF field extraction, claims views, renewals, and follow-ups.',
+      'CRM UI in Next.js, TypeScript, React, and TanStack Query — dashboards, multi-tab leads, and org-level workflows.',
     ],
   },
   {
     id: 'mentoring',
-    title: 'University Mentoring',
+    title: 'Rexx — University Mentoring',
     status: 'Shipped',
     accent: '#2ba0ff',
     ink: '#2c2e2a',
-    role: 'Full-stack developer',
+    role: 'Product engineer',
     period: 'June 2024 – Jan 2025',
     summary:
       'Multi-university mentoring, exams, live chat, and student progress — GPA, EPA, logbooks.',
@@ -130,23 +198,23 @@ export const projects = [
       { label: 'MySQL', icon: 'MySQL' },
     ],
     points: [
-      'Multi-university system for student records, online exams, scores, logbooks, EPA, and assessments.',
-      'Mentoring module with appointment timeslots, live chat over WebSockets, and performance views (GPA, GPAX, semester marks).',
+      'Multi-university system for student records, online exams, scores, logbooks, EPA, and assessments across 12+ universities.',
+      'Mentoring module with appointment timeslots, live chat over WebSockets, and performance views (GPA, GPAX, semester marks) for 5,000+ students.',
       'Singleton DB connection so one backend can reach multiple university databases through a master DB.',
       'Admin settings for phases, academic years, and mentor-to-student assignments.',
-      'Admin dashboard for Logbook, EPA Progress, Longitudinal Pool, and Excellence metrics.',
+      'Admin dashboard for Logbook, EPA Progress, Longitudinal Pool, and Excellence metrics for 150+ mentors and admins.',
     ],
   },
   {
     id: 'edtech',
     title: 'EdTech Performance',
     status: 'Shipped',
-    accent: '#8ed462',
+    accent: '#6345ED',
     ink: '#2c2e2a',
     role: 'Backend developer',
     period: 'Dec 2023 – May 2024',
     summary:
-      'Profiled a legacy PHP backend, rewrote the hot path, and moved core modules to Node.js — 3 min down to under 5s.',
+      'Profiled a legacy PHP backend, rewrote the hot path, and moved core modules to Node.js — minutes down to seconds.',
     stack: ['Node.js', 'PHP', 'MySQL'],
     architecture: [
       { label: 'PHP', icon: 'PHP' },
@@ -154,9 +222,8 @@ export const projects = [
       { label: 'Node.js', icon: 'Node.js' },
     ],
     points: [
-      'Profiled a legacy PHP backend with complex SQL and request-processing flows.',
-      'Cut API response times from about 3 minutes to under 5 seconds.',
-      'Stored procedures brought heavy query time from around 40 seconds to 1 second.',
+      'Identified and fixed critical bottlenecks on a production ed-tech platform — dashboard loads from 4–5 minutes to under 10 seconds.',
+      'Complex SQL and stored procedures stabilized dashboards over 50K+ student records without first-load crashes.',
       'Moved core backend modules from PHP to Node.js for maintainability and async handling.',
       'Data fetching and filtering scaled to thousands of student records after the migration.',
     ],
@@ -170,7 +237,7 @@ export const skills = {
     { id: 'all', label: 'All', color: 'bg-ink' },
     { id: 'ai', label: 'AI & LLM', color: 'bg-sky' },
     { id: 'agents', label: 'Agents & retrieval', color: 'bg-sun' },
-    { id: 'languages', label: 'Languages', color: 'bg-grass' },
+    { id: 'languages', label: 'Languages', color: 'bg-magenta' },
     { id: 'backend', label: 'Backend & cloud', color: 'bg-coral' },
     { id: 'frontend', label: 'Frontend', color: 'bg-sun' },
     { id: 'ops', label: 'Mobile & ops', color: 'bg-sky' },
@@ -274,8 +341,9 @@ export const experience = [
 
 export const about = {
   kicker: 'About',
-  heading:
-    'Twenty-five, from Bengaluru. Building full-stack products for startups while keeping the systems calm under load.',
+  get heading() {
+    return `${getAgeWords()}, from Bengaluru. Building products and systems for startups — AI included — while keeping them calm under load.`
+  },
   timeline: [
     {
       title: 'Senior Software Engineer I',
@@ -295,10 +363,10 @@ export const about = {
   ],
   offer: {
     title: 'What I take on',
-    copy: 'Platform hardening, full-stack product engineering, and AI-assisted developer tools — shipped as real systems, not demos.',
+    copy: 'Platform hardening, product engineering, and AI-assisted developer tools — shipped as real systems, not demos.',
     items: [
       'Performance & query work',
-      'Full-stack web products',
+      'Web & product builds',
       'Local-first AI tooling',
     ],
   },
@@ -342,7 +410,7 @@ export const awards = [
     org: 'Techcanopy',
     when: 'Q4 2024',
     mark: 'Rexx',
-    accent: '#8ed462',
+    accent: '#ff8a3c',
     copy: 'Exemplary dedication on Rexx — meeting and often exceeding the bar, every sprint.',
   },
   {
@@ -352,7 +420,7 @@ export const awards = [
     org: 'Techcanopy',
     when: 'Q1 2025',
     mark: 'Client',
-    accent: '#8ed462',
+    accent: '#f5e211',
     copy: 'Individual work that made the team shine — noticed and appreciated by the client.',
   },
 ]
